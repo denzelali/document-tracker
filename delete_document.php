@@ -2,13 +2,15 @@
 include("config/db.php");
 
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = "DELETE FROM documents WHERE doc_id = $id";
-    if ($conn->query($sql) === TRUE) {
-        header("Location: index.php?msg=deleted");
-        exit;
-    } else {
-        echo "Error deleting record: " . $conn->error;
-    }
+    $id = intval($_GET['id']);
+    
+    // Instead of DELETE, mark as Deleted
+    $sql = "UPDATE documents SET status = 'Deleted' WHERE doc_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+
+    header("Location: index.php?msg=Document marked as deleted");
+    exit;
 }
 ?>
