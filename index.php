@@ -1,5 +1,6 @@
 <?php 
 include("config/db.php"); 
+include("config/database.sqlite");
 include("includes/header.php"); 
 
 // Pagination logic
@@ -56,11 +57,13 @@ $total_records = $total_row['total'];
 $total_pages = ceil($total_records / $limit);
 ?>
 
-<div class="container mx-auto px-4 py-6 min-h-screen">
+<div class="container mx-auto px-2 sm:px-4 py-6 min-h-screen">
+
 
   <!-- Date / Month Filter -->
   <!-- Separate Date + Month Filters with Apply Button -->
-<div class="mb-3 flex space-x-4 font-sans text-sm">
+<div class="mb-3 flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0 font-sans text-sm">
+
 
   <!-- Date Filter -->
   <div class="flex flex-col items-start">
@@ -101,7 +104,7 @@ $total_pages = ceil($total_records / $limit);
     <!-- Table Content -->
     <div class="overflow-x-auto">
       <table class="min-w-full text-sm text-left text-gray-700">
-        <thead class="bg-blue-900 text-white uppercase text-xs">
+<thead class="bg-blue-900 text-white uppercase text-[10px] sm:text-xs">
           <tr>
             <th class="px-4 py-3 font-bold">ID</th>
             <th class="px-4 py-3 font-bold">DOCUMENT TITLE</th>
@@ -147,13 +150,20 @@ $total_pages = ceil($total_records / $limit);
     $row_class = ($row_count % 2 == 0) ? "bg-gray-50" : "bg-white";
 
     echo "<tr class='{$row_class} border-b border-gray-200 hover:bg-blue-50 transition-colors'>
-            <td class='px-4 py-3 font-medium'>{$row_count}</td>
-            <td class='px-4 py-3 font-medium text-blue-900'>" . htmlspecialchars($row['title']) . "</td>
-            <td class='px-4 py-3'>" . htmlspecialchars($row['location']) . "</td>
-            <td class='px-4 py-3'>" . htmlspecialchars($row['category']) . "</td>
-            <td class='px-4 py-3'>" . htmlspecialchars($row['submitted_by']) . "</td>
-            <td class='px-4 py-3'>" . date('m/d/Y h:i A', strtotime($row['submitted_date'])) . "</td>
-            <td class='px-4 py-3'>
+            <td class='px-2 py-2 sm:px-4 sm:py-3 font-medium'>
+{$row_count}</td>
+            <td class='px-2 py-2 sm:px-4 sm:py-3 font-medium
+ text-blue-900'>" . htmlspecialchars($row['title']) . "</td>
+            <td class='px-2 py-2 sm:px-4 sm:py-3 font-medium'>
+" . htmlspecialchars($row['location']) . "</td>
+            <td class='px-2 py-2 sm:px-4 sm:py-3 font-medium'>
+" . htmlspecialchars($row['category']) . "</td>
+            <td class='px-2 py-2 sm:px-4 sm:py-3 font-medium'>
+" . htmlspecialchars($row['submitted_by']) . "</td>
+            <td class='px-2 py-2 sm:px-4 sm:py-3 font-medium'>
+" . date('m/d/Y h:i A', strtotime($row['submitted_date'])) . "</td>
+            <td class='px-2 py-2 sm:px-4 sm:py-3 font-medium'>
+
               <span class='px-3 py-1 rounded-full text-white text-xs font-bold uppercase " .
                 ($row['status'] == 'Pending' ? 'bg-gray-600' :
                 ($row['status'] == 'Approved' ? 'bg-green-600' :
@@ -162,8 +172,10 @@ $total_pages = ceil($total_records / $limit);
                 {$row['status']}
               </span>
             </td>
-            <td class='px-4 py-3'>" . date('m/d/Y h:i A', strtotime($row['last_update'])) . "</td>
-            <td class='px-4 py-3'>
+            <td class='px-2 py-2 sm:px-4 sm:py-3 font-medium'>
+" . date('m/d/Y h:i A', strtotime($row['last_update'])) . "</td>
+            <td class='px-2 py-2 sm:px-4 sm:py-3 font-medium'>
+
               <div class='flex space-x-2'>
 
                 <!-- Edit Form -->
@@ -252,7 +264,8 @@ $total_pages = ceil($total_records / $limit);
     </div>
     
     <!-- Navigation Controls -->
-    <div style="text-align: center;">
+    <div class="flex flex-wrap justify-center gap-2 text-sm">
+
         
         <!-- Previous -->
         <?php if ($page > 1): ?>
